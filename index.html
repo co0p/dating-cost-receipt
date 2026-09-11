@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Date-A-Base</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-container">
+
+    <header class="app-header">
+      <h1>Date-A-Base</h1>
+      <p class="app-subtitle">The Dating Cost Calculator</p>
+    </header>
+
+    <main class="app-main">
+
+      <!-- Form Panel -->
+      <section class="form-panel">
+
+        <fieldset class="fieldset">
+          <legend>Header Info</legend>
+
+          <label for="date">Date</label>
+          <input type="date" id="date" name="date" />
+
+          <label for="payer-name">Your Name</label>
+          <input type="text" id="payer-name" name="payer-name" placeholder="e.g. Alex" />
+
+          <label for="datee-name">Their Name</label>
+          <input type="text" id="datee-name" name="datee-name" placeholder="e.g. Jordan" />
+        </fieldset>
+
+        <fieldset class="fieldset">
+          <legend>Logistical Costs</legend>
+
+          <label for="distance">Distance Traveled (km)</label>
+          <input type="number" id="distance" name="distance" min="0" placeholder="0" />
+
+          <label for="vehicle">Vehicle Used</label>
+          <select id="vehicle" name="vehicle">
+            <option value="walking">Walking (Free)</option>
+            <option value="transit">Public Transit ($)</option>
+            <option value="own-car">Own Car ($$)</option>
+            <option value="uber">Uber / Taxi ($$$)</option>
+            <option value="helicopter">Rented Helicopter ($$$$)</option>
+          </select>
+
+          <label for="weather">Weather Conditions</label>
+          <select id="weather" name="weather">
+            <option value="sunny">Sunny (No charge)</option>
+            <option value="rain">Raining (Annoyance tax)</option>
+            <option value="snow">Snow / Blizzard (Hazard pay)</option>
+          </select>
+        </fieldset>
+
+        <fieldset class="fieldset">
+          <legend>Emotional Deductions</legend>
+
+          <label for="enjoyment">
+            Enjoyment Level: <span id="enjoyment-value">5</span>/10
+          </label>
+          <input
+            type="range"
+            id="enjoyment"
+            name="enjoyment"
+            min="1"
+            max="10"
+            value="5"
+          />
+          <div class="slider-labels">
+            <span>Complete Disaster</span>
+            <span>Love of my life</span>
+          </div>
+        </fieldset>
+
+      </section>
+
+      <!-- Receipt Panel -->
+      <section class="receipt-panel" id="receipt">
+        <div class="receipt-inner">
+
+          <div class="receipt-header">
+            <div class="receipt-title">DATE-A-BASE</div>
+            <div class="receipt-subtitle">OFFICIAL DATE RECEIPT</div>
+            <div class="receipt-divider">--------------------------------</div>
+            <div class="receipt-meta">
+              <div>DATE: <span id="receipt-date">--</span></div>
+              <div>PAYER: <span id="receipt-payer">--</span></div>
+              <div>DATEE: <span id="receipt-datee">--</span></div>
+            </div>
+            <div class="receipt-divider">--------------------------------</div>
+          </div>
+
+          <div class="receipt-items">
+            <div class="receipt-line">
+              <span class="receipt-label">Base Cost (Left the house)</span>
+              <span class="receipt-amount" id="receipt-base">$10.00</span>
+            </div>
+            <div class="receipt-line">
+              <span class="receipt-label">Vehicle surcharge</span>
+              <span class="receipt-amount" id="receipt-vehicle">$0.00</span>
+            </div>
+            <div class="receipt-line">
+              <span class="receipt-label">Weather tax</span>
+              <span class="receipt-amount" id="receipt-weather">$0.00</span>
+            </div>
+            <div class="receipt-line receipt-deduction">
+              <span class="receipt-label">Enjoyment discount</span>
+              <span class="receipt-amount" id="receipt-enjoyment">-$0.00</span>
+            </div>
+          </div>
+
+          <div class="receipt-divider">================================</div>
+
+          <div class="receipt-total-line">
+            <span class="receipt-total-label">TOTAL</span>
+            <span class="receipt-total-amount" id="receipt-total">$10.00</span>
+          </div>
+
+          <div class="receipt-footer">
+            <div class="receipt-divider">--------------------------------</div>
+            <div class="receipt-thank-you">THANK YOU FOR YOUR SUFFERING</div>
+            <div class="receipt-fine-print">No refunds. Feelings are non-transferable.</div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

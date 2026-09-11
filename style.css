@@ -1,0 +1,280 @@
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: #f0ece4;
+  color: #222;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+/* ============================================================
+   APP CONTAINER — max-width centered on wide viewports
+   ============================================================ */
+.app-container {
+  max-width: 480px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.app-header {
+  text-align: center;
+  padding: 1.5rem 0 1rem;
+}
+
+.app-header h1 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: #1a1a1a;
+}
+
+.app-subtitle {
+  font-size: 0.875rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+/* ============================================================
+   FORM PANEL
+   ============================================================ */
+.form-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.fieldset {
+  border: none;
+  background: #fff;
+  border-radius: 12px;
+  padding: 1rem 1.25rem 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.fieldset legend {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #888;
+  margin-bottom: 0.25rem;
+  padding: 0;
+  width: 100%;
+}
+
+label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #333;
+  display: block;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="number"],
+select {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 0.875rem;
+  font-size: 1rem;
+  color: #222;
+  background: #f7f7f7;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  transition: border-color 0.15s;
+  min-height: 44px;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="number"]:focus,
+select:focus {
+  border-color: #c0392b;
+  background: #fff;
+}
+
+/* Range slider */
+input[type="range"] {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  accent-color: #c0392b;
+  cursor: pointer;
+}
+
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: #999;
+  margin-top: -0.25rem;
+}
+
+/* ============================================================
+   RECEIPT PANEL
+   ============================================================ */
+.receipt-panel {
+  margin-bottom: 2rem;
+}
+
+.receipt-inner {
+  background: #fdfaf4;
+  border-radius: 4px;
+  padding: 1.5rem 1.25rem;
+  font-family: "Courier New", Courier, monospace;
+  color: #333;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  position: relative;
+
+  /* Paper shadow */
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    0 8px 24px rgba(0, 0, 0, 0.06);
+
+  /* Jagged top edge via SVG mask */
+  -webkit-mask-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='8'%3E%3Cpolygon points='0,8 10,0 20,8' fill='black'/%3E%3C/svg%3E"),
+    linear-gradient(black, black);
+  -webkit-mask-size: 20px 8px, 100% calc(100% - 8px);
+  -webkit-mask-position: top, bottom;
+  -webkit-mask-repeat: repeat-x, no-repeat;
+  mask-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='8'%3E%3Cpolygon points='0,8 10,0 20,8' fill='black'/%3E%3C/svg%3E"),
+    linear-gradient(black, black);
+  mask-size: 20px 8px, 100% calc(100% - 8px);
+  mask-position: top, bottom;
+  mask-repeat: repeat-x, no-repeat;
+
+  padding-top: 1.75rem;
+}
+
+.receipt-header {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.receipt-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.receipt-subtitle {
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  color: #666;
+  margin-top: 0.1rem;
+}
+
+.receipt-meta {
+  text-align: left;
+  margin: 0.5rem 0;
+}
+
+.receipt-divider {
+  color: #bbb;
+  letter-spacing: 0.05em;
+  margin: 0.4rem 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.receipt-items {
+  margin: 0.5rem 0;
+}
+
+.receipt-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.15rem 0;
+}
+
+.receipt-label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.receipt-amount {
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.receipt-deduction .receipt-amount {
+  color: #2a7a2a;
+}
+
+.receipt-total-line {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.25rem 0;
+}
+
+.receipt-total-amount {
+  font-size: 1.125rem;
+}
+
+.receipt-total-amount.refund {
+  color: #2a7a2a;
+}
+
+.receipt-footer {
+  text-align: center;
+  margin-top: 0.25rem;
+  color: #999;
+  font-size: 0.6875rem;
+}
+
+.receipt-thank-you {
+  letter-spacing: 0.1em;
+  margin-bottom: 0.2rem;
+}
+
+.receipt-fine-print {
+  font-style: italic;
+}
+
+/* ============================================================
+   WIDE VIEWPORT ENHANCEMENT
+   Only applies above 520px — form and receipt side by side
+   ============================================================ */
+@media (min-width: 900px) {
+  .app-container {
+    max-width: 860px;
+  }
+
+  .app-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+}
