@@ -104,8 +104,22 @@ Full WCAG AA compliance is a post-V1 goal.
 
 ## Action Buttons
 
-**Decision:** Two action buttons live below the receipt panel: "Download Receipt" (primary, red) and "New Date" (secondary, grey).
+**Decision:** "New Date" and the dark mode toggle live in the app header, next to the title. "Download Receipt" lives directly below the receipt panel.
 
-**Decision:** "New Date" resets all form inputs to their defaults and re-runs `updateReceipt`, returning the receipt to its initial state. It does not prompt for confirmation.
+**Rationale:** New Date and dark mode are global controls — they affect the whole app, so they belong at the top near the title. Download is receipt-specific — placing it directly below the receipt makes the relationship obvious and keeps it out of the captured image.
 
-**Rationale:** The reset button removes friction for users who want to calculate a second date without manually clearing every field. No confirmation needed — the form has no persistent state to protect.
+**Decision:** "New Date" resets all form inputs to their defaults and re-runs `updateReceipt`, returning the receipt to its initial state. It does not prompt for confirmation — the form has no persistent state to protect.
+
+**Decision:** The dark mode toggle is an icon button (🌙 / ☀️) in the header. It is compact to avoid crowding the header on narrow screens.
+
+---
+
+## Dark Mode
+
+**Decision:** Dark mode is implemented via a `data-theme="dark"` attribute on `<body>`. All colour overrides live in `style.css` under `[data-theme="dark"]` selectors — no JS style injection.
+
+**Decision:** The receipt panel is explicitly excluded from dark mode overrides. `.receipt-inner` always renders with its cream/paper background (`#fdfaf4`) and dark ink (`#333`) regardless of the active theme. This ensures the downloaded image is always paper-coloured.
+
+**Decision:** Dark mode preference is persisted in `localStorage` under the key `theme` (`"dark"` or `"light"`). This is the only use of localStorage in the app — UI preference only, no personal data.
+
+**Rationale:** CSS-only theming via `data-theme` keeps the implementation auditable and avoids JS style injection. Receipt exemption ensures the shareable image is consistent regardless of the user's theme preference.

@@ -79,7 +79,7 @@ app.js writes results to receipt DOM nodes
 Browser renders updated receipt
 ```
 
-No data leaves the browser. No state persists between sessions.
+No data leaves the browser. One item persists between sessions: the dark mode preference is stored in `localStorage` under the key `theme`. No personal data is stored.
 
 ---
 

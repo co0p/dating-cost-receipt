@@ -9,7 +9,7 @@
 ## Engineering Principles
 
 - No backend, no build step required. The project is static assets only: `index.html`, `style.css`, `app.js`, `calc.js`, and images.
-- All logic is client-side. No data persistence, no cookies, no local storage.
+- All logic is client-side. No external API calls, no data persistence, no cookies. One exception: `localStorage` is used to persist the dark mode UI preference (key: `theme`). No personal data is stored.
 - One scoped external runtime dependency is permitted: `html2canvas` loaded from CDN for the Download Receipt feature. All other features must remain dependency-free. See [ADR-20260911-html2canvas-cdn](docs/adr/ADR-20260911-html2canvas-cdn.md).
 - Satirical tone is a product constraint. Calculation rules must optimize for comedic effect, not financial accuracy.
 - Keep dependencies minimal. Prefer zero-dependency vanilla JS. If a framework is introduced it must compile to static output with no runtime server requirement.

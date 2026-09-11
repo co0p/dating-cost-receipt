@@ -25,16 +25,19 @@ Product direction and sequencing for Date-A-Base. Each entry states the user out
 
 ---
 
+### Dark Mode
+
+- **Job story:** When I'm using the app at night or in a dark bar, I want a dark UI mode, so the screen doesn't blind me — while keeping the receipt looking like paper.
+- **Evidence:** 39 unit tests passing (`npx vitest run`), deployed at https://co0p.github.io/dating-cost-receipt/
+- **Delivered:** 2026-09-11
+
+---
+
 ## Partial
 
 ---
 
 ## Planned
-
-### Dark Mode
-
-- **Job story:** When I'm using the app at night or in a dark bar, I want a dark UI mode, so the screen doesn't blind me — while keeping the receipt looking like paper.
-- **Why after Download:** Purely aesthetic enhancement. Does not affect calculation logic.
 
 ---
 
