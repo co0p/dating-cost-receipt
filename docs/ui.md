@@ -52,16 +52,30 @@ Durable interaction patterns, visual principles, and accessibility rules for Dat
 
 **Decision:** All labels, line items, and helper text must be satirical and playful. Dry or neutral copy is not permitted in the receipt output.
 
-**Examples of correct tone:**
-- "Base Cost (For leaving the house): $10.00"
-- "Rain Tax (Hair ruined): $15.00"
-- "Enjoyment Discount (Actually laughed at my joke): -$30.00"
+**Canonical label examples (from shipped copy):**
+
+| Input value | Receipt label |
+|---|---|
+| Walking | "Foot power (dignity: intact)" |
+| Uber | "Uber (surge pricing, obviously)" |
+| Rented Helicopter | "Helicopter (no regrets, only debt)" |
+| Raining | "Rain tax (hair completely ruined)" |
+| Blizzard | "Blizzard hazard pay (maniac)" |
+| Outfit level 1 | "Outfit: rolled out of bed" |
+| Outfit level 5 | "Outfit: Renaissance painting" |
+| Ex mentioned | "Ex mention penalty" |
+| 3 silences | "Silence tax (3 painful)" |
+| Michelin star | "Food: Michelin star (propose now)" |
+| Enjoyment 1 | "Enjoyment (send help)" |
+| Enjoyment 10 | "Enjoyment (where have you been)" |
+| 4 laughs | "Joke credit (4 laughs)" |
 
 **Examples of incorrect tone:**
 - "Transportation: $20.00"
 - "Discount: -$30.00"
+- "Weather surcharge: $15.00"
 
-**Rationale:** The comedic copy is the product. Neutral labels make it look like a real expense tracker.
+**Rationale:** The comedic copy is the product. Neutral labels make it look like a real expense tracker. New variables must follow the same pattern — the label must contain a parenthetical that delivers the joke.
 
 ---
 

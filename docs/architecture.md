@@ -7,25 +7,25 @@ Date-A-Base is a single-page static web application. There is no server, no API,
 ## C4 Level 2 — Container View
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│  User's Browser                                                 │
-│                                                                 │
-│  ┌───────────────┐    reads/writes DOM    ┌──────────────────┐  │
-│  │  index.html   │ ──────────────────────▶│    app.js        │  │
-│  │               │                        │                  │  │
-│  │  Markup &     │◀── updates receipt ─── │  - Event wiring  │  │
-│  │  form shell   │                        │  - Calculation   │  │
-│  └───────────────┘                        │    functions     │  │
-│         │                                 └──────────────────┘  │
-│         │ links                                    │             │
-│         ▼                                          ▼             │
-│  ┌───────────────┐                        (pure functions,       │
-│  │  style.css    │                         no DOM dependency)    │
-│  │               │                                              │
-│  │  App styles + │                                              │
-│  │  Receipt theme│                                              │
-│  └───────────────┘                                              │
-└─────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────┐
+│  User's Browser                                                      │
+│                                                                      │
+│  ┌───────────────┐    loads     ┌──────────────────┐                 │
+│  │  index.html   │ ────────────▶│    app.js        │                 │
+│  │               │              │                  │                 │
+│  │  Markup &     │◀─ updates ── │  - Event wiring  │                 │
+│  │  form shell   │   receipt    │  - DOM reads     │                 │
+│  └───────────────┘              │  - DOM writes    │                 │
+│         │                       └────────┬─────────┘                 │
+│         │ links                          │ imports                   │
+│         ▼                                ▼                            │
+│  ┌───────────────┐              ┌──────────────────┐                 │
+│  │  style.css    │              │    calc.js       │                 │
+│  │               │              │                  │                 │
+│  │  App styles + │              │  Pure functions  │                 │
+│  │  Receipt theme│              │  No DOM access   │                 │
+│  └───────────────┘              └──────────────────┘                 │
+└──────────────────────────────────────────────────────────────────────┘
 
 Hosted on: GitHub Pages (static file serving, no server-side logic)
 ```
@@ -36,23 +36,28 @@ Hosted on: GitHub Pages (static file serving, no server-side logic)
 
 ### `index.html`
 - Entry point and markup shell.
-- Declares the form inputs and the receipt output area.
-- Links `style.css` and `app.js`. No inline scripts or styles beyond the minimum for initial render.
+- Declares all form inputs and receipt output elements with stable IDs.
+- Loads `style.css` and `app.js` (as `type="module"`). No inline scripts or styles.
 
 ### `app.js`
-- All calculation logic and DOM event handling.
-- Pure calculation functions (vehicle cost, weather tax, enjoyment discount, total) are exported separately from the DOM wiring.
-- Reacts to form `input` and `change` events; updates receipt DOM nodes in real time.
-- No network calls, no storage reads or writes.
+- DOM event wiring only. Reads form input values, calls `calc.js` functions, writes results to receipt DOM nodes.
+- Imports pure calculation functions from `calc.js`.
+- Reacts to `input` and `change` events on all form elements; updates receipt in real time.
+- No calculation logic. No network calls. No storage reads or writes.
+
+### `calc.js`
+- All pure calculation functions: `vehicleCost`, `weatherTax`, `outfitSurcharge`, `exPenalty`, `silenceTax`, `foodModifier`, `laughDiscount`, `enjoymentDiscount`, `calculateTotal`.
+- No DOM access. Safe to import in Node.js (used by Vitest).
+- Single source of truth for all cost rules and constants (`BASE_COST`, `VEHICLE_MULTIPLIERS`, `WEATHER_TAX`, `OUTFIT_SURCHARGES`, `FOOD_MODIFIERS`).
 
 ### `style.css`
 - All visual styling.
-- Two distinct themes in one file: the app UI (clean, modern, mobile-first) and the receipt (monospaced font, paper texture, jagged edges).
+- Two distinct themes in one file: the app UI (clean, modern, mobile-first) and the receipt (monospaced font, off-white background, jagged top edge via SVG mask).
 - No runtime style injection from JS.
 
 ### GitHub Pages (external)
 - Serves the repository root of `main` as static files.
-- No server-side processing. No CDN configuration required for V1.
+- No server-side processing. No CDN configuration required.
 
 ---
 
@@ -65,7 +70,7 @@ User input (form event)
 app.js reads form values
         │
         ▼
-Pure calculation functions → computed cost breakdown
+calc.js pure functions → computed cost breakdown
         │
         ▼
 app.js writes results to receipt DOM nodes
@@ -81,18 +86,21 @@ No data leaves the browser. No state persists between sessions.
 ## Dependency Direction
 
 ```
-index.html → app.js
+index.html → app.js (type="module")
 index.html → style.css
-app.js     → (no imports for V1 — vanilla JS)
+app.js     → calc.js (ES module import)
 style.css  → (no imports)
+calc.js    → (no imports)
 ```
 
-No reverse dependencies. `app.js` does not import `index.html` structure by name — it queries the DOM by stable IDs and classes defined in `index.html`.
+`app.js` queries the DOM by stable IDs defined in `index.html` — it does not import HTML structure by name. `calc.js` has no knowledge of the DOM or `app.js`.
 
 ---
 
 ## Constraints
 
-- No build pipeline for V1. All files are served as-is.
-- No framework runtime. If a framework is introduced later, it must compile to self-contained static output.
-- No external runtime dependencies (CDN fonts, remote images, analytics scripts) that would add load time or create failure points.
+- No build pipeline. All files are served as-is from the repository root.
+- No framework runtime.
+- No external runtime dependencies (CDN fonts, remote images, analytics scripts).
+- `calc.js` must remain DOM-free. Any function that touches `document` belongs in `app.js`.
+- `app.js` must remain calculation-free. Any arithmetic belongs in `calc.js`.

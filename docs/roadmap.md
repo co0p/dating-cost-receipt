@@ -9,38 +9,30 @@ Product direction and sequencing for Date-A-Base. Each entry states the user out
 
 ## Done
 
-<!-- Nothing shipped yet. -->
+### V1 — Core Receipt Calculator
+
+- **Job story:** When I finish a date, I want to enter its details and see a satirical cost receipt, so I can laugh about it with friends or share it on social media.
+- **Evidence:** 31 unit tests passing (`npx vitest run`), deployed at https://co0p.github.io/dating-cost-receipt/
+- **Delivered:** 2026-09-11
 
 ---
 
 ## Partial
 
-### V1 — Core Receipt Calculator
-
-- **Job story:** When I finish a date, I want to enter its details and see a satirical cost receipt, so I can laugh about it with friends or share it on social media.
-- **Increment:** initial-page-render-and-deploy
-
 ---
 
 ## Planned
 
----
-
 ### Download Receipt Button
 
 - **Job story:** When I want to share my receipt, I want to download it as an image, so I don't have to manually crop a screenshot.
-- **Why after V1:** Requires `html2canvas` library integration. No value without the core receipt existing first.
+- **Why next:** Requires `html2canvas` library integration. Core receipt must exist first (it does).
 - **Open question:** Whether to load `html2canvas` from a CDN or bundle it. Resolve at implementation time.
-
-### More Comedic Variables
-
-- **Job story:** When I want to capture more of the date's chaos, I want to add inputs like "Awkward Silences (Count)" or "Ex Mentioned (Yes/No)", so the receipt reflects the full emotional damage.
-- **Why after V1:** Extension of the core model. Adds comedic depth without changing architecture.
 
 ### Dark Mode
 
 - **Job story:** When I'm using the app at night or in a dark bar, I want a dark UI mode, so the screen doesn't blind me — while keeping the receipt looking like paper.
-- **Why after V1:** Purely aesthetic enhancement. Does not affect calculation logic.
+- **Why after Download:** Purely aesthetic enhancement. Does not affect calculation logic.
 
 ---
 
