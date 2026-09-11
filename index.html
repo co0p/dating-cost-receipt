@@ -11,7 +11,7 @@
 
     <header class="app-header">
       <h1>Date-A-Base</h1>
-      <p class="app-subtitle">The Dating Cost Calculator</p>
+      <p class="app-subtitle">The Official Dating Cost Calculator™</p>
     </header>
 
     <main class="app-main">
@@ -20,59 +20,90 @@
       <section class="form-panel">
 
         <fieldset class="fieldset">
-          <legend>Header Info</legend>
+          <legend>The Basics</legend>
 
-          <label for="date">Date</label>
+          <label for="date">Date of Incident</label>
           <input type="date" id="date" name="date" />
 
-          <label for="payer-name">Your Name</label>
+          <label for="payer-name">Your Name (The Victim)</label>
           <input type="text" id="payer-name" name="payer-name" placeholder="e.g. Alex" />
 
-          <label for="datee-name">Their Name</label>
+          <label for="datee-name">Their Name (The Accused)</label>
           <input type="text" id="datee-name" name="datee-name" placeholder="e.g. Jordan" />
         </fieldset>
 
         <fieldset class="fieldset">
-          <legend>Logistical Costs</legend>
+          <legend>Logistical Damages</legend>
 
           <label for="distance">Distance Traveled (km)</label>
           <input type="number" id="distance" name="distance" min="0" placeholder="0" />
 
-          <label for="vehicle">Vehicle Used</label>
+          <label for="vehicle">Mode of Transport</label>
           <select id="vehicle" name="vehicle">
-            <option value="walking">Walking (Free)</option>
-            <option value="transit">Public Transit ($)</option>
-            <option value="own-car">Own Car ($$)</option>
-            <option value="uber">Uber / Taxi ($$$)</option>
-            <option value="helicopter">Rented Helicopter ($$$$)</option>
+            <option value="walking">Walking (Free, but your dignity isn't)</option>
+            <option value="transit">Public Transit (Sardine can, $0.50/km)</option>
+            <option value="own-car">Own Car (Wear, tear & regret, $1/km)</option>
+            <option value="uber">Uber (Surge pricing, obviously, $2/km)</option>
+            <option value="helicopter">Rented Helicopter (No regrets, only debt, $5/km)</option>
           </select>
 
           <label for="weather">Weather Conditions</label>
           <select id="weather" name="weather">
-            <option value="sunny">Sunny (No charge)</option>
-            <option value="rain">Raining (Annoyance tax)</option>
-            <option value="snow">Snow / Blizzard (Hazard pay)</option>
+            <option value="sunny">Sunny (The universe approves)</option>
+            <option value="rain">Raining (Hair destroyed, dignity intact)</option>
+            <option value="snow">Snow / Blizzard (You absolute maniac)</option>
           </select>
         </fieldset>
 
         <fieldset class="fieldset">
-          <legend>Emotional Deductions</legend>
+          <legend>Vanity &amp; Preparation</legend>
+
+          <label for="outfit">
+            Outfit Effort: <span id="outfit-value">1</span>/5
+          </label>
+          <input type="range" id="outfit" name="outfit" min="1" max="5" value="1" />
+          <div class="slider-labels">
+            <span>Rolled out of bed</span>
+            <span>Renaissance painting</span>
+          </div>
+        </fieldset>
+
+        <fieldset class="fieldset">
+          <legend>Emotional Damages</legend>
 
           <label for="enjoyment">
-            Enjoyment Level: <span id="enjoyment-value">5</span>/10
+            Overall Enjoyment: <span id="enjoyment-value">5</span>/10
           </label>
-          <input
-            type="range"
-            id="enjoyment"
-            name="enjoyment"
-            min="1"
-            max="10"
-            value="5"
-          />
+          <input type="range" id="enjoyment" name="enjoyment" min="1" max="10" value="5" />
           <div class="slider-labels">
-            <span>Complete Disaster</span>
+            <span>Complete disaster</span>
             <span>Love of my life</span>
           </div>
+
+          <label for="laughs">Times They Laughed at My Jokes</label>
+          <input type="number" id="laughs" name="laughs" min="0" value="0" placeholder="0" />
+
+          <label for="ex-mentioned">Did They Mention Their Ex?</label>
+          <select id="ex-mentioned" name="ex-mentioned">
+            <option value="no">No (A miracle)</option>
+            <option value="yes">Yes (I need a moment)</option>
+          </select>
+
+          <label for="silences">Awkward Silences (count)</label>
+          <input type="number" id="silences" name="silences" min="0" value="0" placeholder="0" />
+        </fieldset>
+
+        <fieldset class="fieldset">
+          <legend>Culinary Report</legend>
+
+          <label for="food">Food Quality</label>
+          <select id="food" name="food">
+            <option value="sad-salad">Sad desk salad (Criminal)</option>
+            <option value="fast-food">Fast food (Bold choice)</option>
+            <option value="decent-pasta" selected>Decent pasta (Respectable)</option>
+            <option value="fancy-dinner">Fancy dinner (Now we're talking)</option>
+            <option value="michelin">Michelin star (Marry them immediately)</option>
+          </select>
         </fieldset>
 
       </section>
@@ -95,20 +126,40 @@
 
           <div class="receipt-items">
             <div class="receipt-line">
-              <span class="receipt-label">Base Cost (Left the house)</span>
+              <span class="receipt-label">Base cost (Left the house)</span>
               <span class="receipt-amount" id="receipt-base">$10.00</span>
             </div>
             <div class="receipt-line">
-              <span class="receipt-label">Vehicle surcharge</span>
+              <span class="receipt-label" id="label-vehicle">Transport surcharge</span>
               <span class="receipt-amount" id="receipt-vehicle">$0.00</span>
             </div>
             <div class="receipt-line">
-              <span class="receipt-label">Weather tax</span>
+              <span class="receipt-label" id="label-weather">Weather tax</span>
               <span class="receipt-amount" id="receipt-weather">$0.00</span>
             </div>
+            <div class="receipt-line">
+              <span class="receipt-label" id="label-outfit">Outfit surcharge</span>
+              <span class="receipt-amount" id="receipt-outfit">$0.00</span>
+            </div>
             <div class="receipt-line receipt-deduction">
-              <span class="receipt-label">Enjoyment discount</span>
+              <span class="receipt-label" id="label-enjoyment">Enjoyment discount</span>
               <span class="receipt-amount" id="receipt-enjoyment">-$0.00</span>
+            </div>
+            <div class="receipt-line receipt-deduction">
+              <span class="receipt-label" id="label-laughs">Joke appreciation</span>
+              <span class="receipt-amount" id="receipt-laughs">-$0.00</span>
+            </div>
+            <div class="receipt-line" id="line-ex" style="display:none">
+              <span class="receipt-label">Ex mention penalty</span>
+              <span class="receipt-amount" id="receipt-ex">$50.00</span>
+            </div>
+            <div class="receipt-line">
+              <span class="receipt-label" id="label-silences">Silence tax</span>
+              <span class="receipt-amount" id="receipt-silences">$0.00</span>
+            </div>
+            <div class="receipt-line" id="line-food">
+              <span class="receipt-label" id="label-food">Food report</span>
+              <span class="receipt-amount" id="receipt-food">$0.00</span>
             </div>
           </div>
 

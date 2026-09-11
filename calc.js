@@ -49,17 +49,94 @@ export function enjoymentDiscount(baseCost, logisticalCosts, enjoyment) {
   return (baseCost + logisticalCosts) * (enjoyment / 10);
 }
 
+export const OUTFIT_SURCHARGES = {
+  1: 0,
+  2: 5,
+  3: 10,
+  4: 15,
+  5: 20,
+};
+
+export const FOOD_MODIFIERS = {
+  'sad-salad': 10,
+  'fast-food': 5,
+  'decent-pasta': 0,
+  'fancy-dinner': -15,
+  'michelin': -25,
+};
+
 /**
- * Final total. May be negative (a Refund).
+ * Vanity surcharge based on outfit effort (1–5).
+ * @param {number} level - integer 1–5
+ * @returns {number}
+ */
+export function outfitSurcharge(level) {
+  return OUTFIT_SURCHARGES[level] ?? 0;
+}
+
+/**
+ * Flat penalty if the ex was mentioned.
+ * @param {boolean} mentioned
+ * @returns {number}
+ */
+export function exPenalty(mentioned) {
+  return mentioned ? 50 : 0;
+}
+
+/**
+ * Tax per awkward silence.
+ * @param {number} count - number of silences
+ * @returns {number}
+ */
+export function silenceTax(count) {
+  return Math.max(0, count) * 5;
+}
+
+/**
+ * Cost modifier based on food quality. Positive = surcharge, negative = discount.
+ * @param {string} food - one of the FOOD_MODIFIERS keys
+ * @returns {number}
+ */
+export function foodModifier(food) {
+  return FOOD_MODIFIERS[food] ?? 0;
+}
+
+/**
+ * Discount per laugh. Floored at 0.
+ * @param {number} laughs - number of times they laughed at your jokes
+ * @returns {number}
+ */
+export function laughDiscount(laughs) {
+  return Math.max(0, laughs) * 3;
+}
+
+/**
+ * Final total. Floored at 0.
  * @param {number} distance
  * @param {string} vehicle
  * @param {string} weather
- * @param {number} enjoyment
+ * @param {number} enjoyment - 1–10
+ * @param {number} outfitLevel - 1–5
+ * @param {boolean} exMentioned
+ * @param {number} silences - 0–10
+ * @param {string} food
+ * @param {number} laughs
  * @returns {number}
  */
-export function calculateTotal(distance, vehicle, weather, enjoyment) {
+export function calculateTotal(
+  distance, vehicle, weather, enjoyment,
+  outfitLevel = 1, exMentioned = false, silences = 0, food = 'decent-pasta', laughs = 0
+) {
   const vc = vehicleCost(vehicle, distance);
   const wt = weatherTax(weather);
-  const discount = enjoymentDiscount(BASE_COST, vc + wt, enjoyment);
-  return BASE_COST + vc + wt - discount;
+  const os = outfitSurcharge(outfitLevel);
+  const ep = exPenalty(exMentioned);
+  const st = silenceTax(silences);
+  const fm = foodModifier(food);
+  const ld = laughDiscount(laughs);
+
+  const logistical = vc + wt + os + ep + st + fm;
+  const discount = enjoymentDiscount(BASE_COST, logistical, enjoyment);
+
+  return Math.max(0, BASE_COST + logistical - discount - ld);
 }
