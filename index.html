@@ -10,8 +10,14 @@
   <div class="app-container">
 
     <header class="app-header">
-      <h1>Date-A-Base</h1>
-      <p class="app-subtitle">The Official Dating Cost Calculator™</p>
+      <div class="app-header-title">
+        <h1>Date-A-Base</h1>
+        <p class="app-subtitle">The Official Dating Cost Calculator™</p>
+      </div>
+      <div class="app-header-actions">
+        <button id="btn-reset" class="btn btn-header" title="Start a new date">✕ New Date</button>
+        <button id="btn-dark" class="btn btn-header" title="Toggle dark mode">🌙</button>
+      </div>
     </header>
 
     <main class="app-main">
@@ -108,81 +114,81 @@
 
       </section>
 
-      <!-- Receipt Panel -->
-      <section class="receipt-panel" id="receipt">
-        <div class="receipt-inner">
+      <!-- Receipt + Download column -->
+      <div class="receipt-column">
 
-          <div class="receipt-header">
-            <div class="receipt-title">DATE-A-BASE</div>
-            <div class="receipt-subtitle">OFFICIAL DATE RECEIPT</div>
-            <div class="receipt-divider">--------------------------------</div>
-            <div class="receipt-meta">
-              <div>DATE: <span id="receipt-date">--</span></div>
-              <div>PAYER: <span id="receipt-payer">--</span></div>
-              <div>DATEE: <span id="receipt-datee">--</span></div>
+        <section class="receipt-panel" id="receipt">
+          <div class="receipt-inner">
+
+            <div class="receipt-header">
+              <div class="receipt-title">DATE-A-BASE</div>
+              <div class="receipt-subtitle">OFFICIAL DATE RECEIPT</div>
+              <div class="receipt-divider">--------------------------------</div>
+              <div class="receipt-meta">
+                <div>DATE: <span id="receipt-date">--</span></div>
+                <div>PAYER: <span id="receipt-payer">--</span></div>
+                <div>DATEE: <span id="receipt-datee">--</span></div>
+              </div>
+              <div class="receipt-divider">--------------------------------</div>
             </div>
-            <div class="receipt-divider">--------------------------------</div>
+
+            <div class="receipt-items">
+              <div class="receipt-line">
+                <span class="receipt-label">Base cost (Left the house)</span>
+                <span class="receipt-amount" id="receipt-base">$10.00</span>
+              </div>
+              <div class="receipt-line">
+                <span class="receipt-label" id="label-vehicle">Transport surcharge</span>
+                <span class="receipt-amount" id="receipt-vehicle">$0.00</span>
+              </div>
+              <div class="receipt-line">
+                <span class="receipt-label" id="label-weather">Weather tax</span>
+                <span class="receipt-amount" id="receipt-weather">$0.00</span>
+              </div>
+              <div class="receipt-line">
+                <span class="receipt-label" id="label-outfit">Outfit surcharge</span>
+                <span class="receipt-amount" id="receipt-outfit">$0.00</span>
+              </div>
+              <div class="receipt-line receipt-deduction">
+                <span class="receipt-label" id="label-enjoyment">Enjoyment discount</span>
+                <span class="receipt-amount" id="receipt-enjoyment">-$0.00</span>
+              </div>
+              <div class="receipt-line receipt-deduction">
+                <span class="receipt-label" id="label-laughs">Joke appreciation</span>
+                <span class="receipt-amount" id="receipt-laughs">-$0.00</span>
+              </div>
+              <div class="receipt-line" id="line-ex" style="display:none">
+                <span class="receipt-label">Ex mention penalty</span>
+                <span class="receipt-amount" id="receipt-ex">$50.00</span>
+              </div>
+              <div class="receipt-line">
+                <span class="receipt-label" id="label-silences">Silence tax</span>
+                <span class="receipt-amount" id="receipt-silences">$0.00</span>
+              </div>
+              <div class="receipt-line" id="line-food">
+                <span class="receipt-label" id="label-food">Food report</span>
+                <span class="receipt-amount" id="receipt-food">$0.00</span>
+              </div>
+            </div>
+
+            <div class="receipt-divider">================================</div>
+
+            <div class="receipt-total-line">
+              <span class="receipt-total-label">TOTAL</span>
+              <span class="receipt-total-amount" id="receipt-total">$10.00</span>
+            </div>
+
+            <div class="receipt-footer">
+              <div class="receipt-divider">--------------------------------</div>
+              <div class="receipt-thank-you">THANK YOU FOR YOUR SUFFERING</div>
+              <div class="receipt-fine-print">No refunds. Feelings are non-transferable.</div>
+            </div>
+
           </div>
+        </section>
 
-          <div class="receipt-items">
-            <div class="receipt-line">
-              <span class="receipt-label">Base cost (Left the house)</span>
-              <span class="receipt-amount" id="receipt-base">$10.00</span>
-            </div>
-            <div class="receipt-line">
-              <span class="receipt-label" id="label-vehicle">Transport surcharge</span>
-              <span class="receipt-amount" id="receipt-vehicle">$0.00</span>
-            </div>
-            <div class="receipt-line">
-              <span class="receipt-label" id="label-weather">Weather tax</span>
-              <span class="receipt-amount" id="receipt-weather">$0.00</span>
-            </div>
-            <div class="receipt-line">
-              <span class="receipt-label" id="label-outfit">Outfit surcharge</span>
-              <span class="receipt-amount" id="receipt-outfit">$0.00</span>
-            </div>
-            <div class="receipt-line receipt-deduction">
-              <span class="receipt-label" id="label-enjoyment">Enjoyment discount</span>
-              <span class="receipt-amount" id="receipt-enjoyment">-$0.00</span>
-            </div>
-            <div class="receipt-line receipt-deduction">
-              <span class="receipt-label" id="label-laughs">Joke appreciation</span>
-              <span class="receipt-amount" id="receipt-laughs">-$0.00</span>
-            </div>
-            <div class="receipt-line" id="line-ex" style="display:none">
-              <span class="receipt-label">Ex mention penalty</span>
-              <span class="receipt-amount" id="receipt-ex">$50.00</span>
-            </div>
-            <div class="receipt-line">
-              <span class="receipt-label" id="label-silences">Silence tax</span>
-              <span class="receipt-amount" id="receipt-silences">$0.00</span>
-            </div>
-            <div class="receipt-line" id="line-food">
-              <span class="receipt-label" id="label-food">Food report</span>
-              <span class="receipt-amount" id="receipt-food">$0.00</span>
-            </div>
-          </div>
+        <button id="btn-download" class="btn btn-primary btn-download">⬇ Download Receipt</button>
 
-          <div class="receipt-divider">================================</div>
-
-          <div class="receipt-total-line">
-            <span class="receipt-total-label">TOTAL</span>
-            <span class="receipt-total-amount" id="receipt-total">$10.00</span>
-          </div>
-
-          <div class="receipt-footer">
-            <div class="receipt-divider">--------------------------------</div>
-            <div class="receipt-thank-you">THANK YOU FOR YOUR SUFFERING</div>
-            <div class="receipt-fine-print">No refunds. Feelings are non-transferable.</div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- Action Buttons -->
-      <div class="action-buttons">
-        <button id="btn-download" class="btn btn-primary">⬇ Download Receipt</button>
-        <button id="btn-reset" class="btn btn-secondary">✕ New Date</button>
       </div>
 
     </main>

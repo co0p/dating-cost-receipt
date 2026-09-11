@@ -18,6 +18,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   min-height: 100vh;
   padding: 1rem;
+  transition: background-color 0.2s, color 0.2s;
 }
 
 /* ============================================================
@@ -33,21 +34,36 @@ body {
    HEADER
    ============================================================ */
 .app-header {
-  text-align: center;
-  padding: 1.5rem 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1.25rem 0 1rem;
+}
+
+.app-header-title {
+  flex: 1;
+  min-width: 0;
 }
 
 .app-header h1 {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-weight: 800;
   letter-spacing: -0.5px;
   color: #1a1a1a;
+  white-space: nowrap;
 }
 
 .app-subtitle {
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   color: #666;
-  margin-top: 0.25rem;
+  margin-top: 0.15rem;
+}
+
+.app-header-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
 }
 
 /* ============================================================
@@ -69,6 +85,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  transition: background-color 0.2s;
 }
 
 .fieldset legend {
@@ -104,7 +121,7 @@ select {
   appearance: none;
   -webkit-appearance: none;
   outline: none;
-  transition: border-color 0.15s;
+  transition: border-color 0.15s, background-color 0.2s, color 0.2s;
   min-height: 44px;
 }
 
@@ -134,10 +151,20 @@ input[type="range"] {
 }
 
 /* ============================================================
+   RECEIPT COLUMN — wraps receipt + download button
+   ============================================================ */
+.receipt-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+/* ============================================================
    RECEIPT PANEL
    ============================================================ */
 .receipt-panel {
-  margin-bottom: 2rem;
+  /* no bottom margin — gap handled by receipt-column */
 }
 
 .receipt-inner {
@@ -263,26 +290,19 @@ input[type="range"] {
 }
 
 /* ============================================================
-   ACTION BUTTONS
+   BUTTONS
    ============================================================ */
-.action-buttons {
-  display: flex;
-  gap: 0.75rem;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
-}
-
 .btn {
-  flex: 1;
   min-height: 44px;
-  padding: 0.75rem 1rem;
-  font-size: 0.9375rem;
+  padding: 0.6rem 1rem;
+  font-size: 0.875rem;
   font-weight: 700;
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  transition: opacity 0.15s, transform 0.1s;
+  transition: opacity 0.15s, transform 0.1s, background-color 0.2s;
   letter-spacing: 0.01em;
+  white-space: nowrap;
 }
 
 .btn:active {
@@ -290,27 +310,102 @@ input[type="range"] {
   transform: scale(0.98);
 }
 
+/* Header buttons — compact */
+.btn-header {
+  background: rgba(0, 0, 0, 0.07);
+  color: #333;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8125rem;
+  border-radius: 8px;
+}
+
+.btn-header:hover {
+  background: rgba(0, 0, 0, 0.13);
+}
+
+/* Primary — full-width download */
 .btn-primary {
   background: #c0392b;
   color: #fff;
+  width: 100%;
 }
 
 .btn-primary:hover {
   background: #a93226;
 }
 
-.btn-secondary {
-  background: #eee;
-  color: #333;
+.btn-download {
+  width: 100%;
 }
 
-.btn-secondary:hover {
-  background: #ddd;
+/* ============================================================
+   DARK MODE
+   ============================================================ */
+[data-theme="dark"] body,
+body[data-theme="dark"] {
+  background-color: #1a1a1a;
+  color: #e8e4dc;
+}
+
+[data-theme="dark"] .app-header h1 {
+  color: #f0ece4;
+}
+
+[data-theme="dark"] .app-subtitle {
+  color: #999;
+}
+
+[data-theme="dark"] .fieldset {
+  background: #2a2a2a;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .fieldset legend {
+  color: #777;
+}
+
+[data-theme="dark"] label {
+  color: #ccc;
+}
+
+[data-theme="dark"] input[type="text"],
+[data-theme="dark"] input[type="date"],
+[data-theme="dark"] input[type="number"],
+[data-theme="dark"] select {
+  background: #333;
+  border-color: #444;
+  color: #e8e4dc;
+}
+
+[data-theme="dark"] input[type="text"]:focus,
+[data-theme="dark"] input[type="date"]:focus,
+[data-theme="dark"] input[type="number"]:focus,
+[data-theme="dark"] select:focus {
+  border-color: #e05c50;
+  background: #3a3a3a;
+}
+
+[data-theme="dark"] .slider-labels {
+  color: #666;
+}
+
+[data-theme="dark"] .btn-header {
+  background: rgba(255, 255, 255, 0.1);
+  color: #e8e4dc;
+}
+
+[data-theme="dark"] .btn-header:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* Receipt is always paper — never dark */
+[data-theme="dark"] .receipt-inner {
+  background: #fdfaf4;
+  color: #333;
 }
 
 /* ============================================================
    WIDE VIEWPORT ENHANCEMENT
-   Only applies above 520px — form and receipt side by side
    ============================================================ */
 @media (min-width: 900px) {
   .app-container {
@@ -322,12 +417,5 @@ input[type="range"] {
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
     align-items: start;
-  }
-
-  .action-buttons {
-    grid-column: 1 / -1;
-    max-width: 320px;
-    margin-left: auto;
-    margin-right: auto;
   }
 }

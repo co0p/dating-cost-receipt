@@ -182,6 +182,22 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initial render
   updateReceipt();
 
+  // Dark mode — restore preference and wire toggle
+  const darkBtn = document.getElementById('btn-dark');
+  const applyTheme = dark => {
+    document.body.dataset.theme = dark ? 'dark' : '';
+    darkBtn.textContent = dark ? '☀️' : '🌙';
+    darkBtn.title = dark ? 'Switch to light mode' : 'Switch to dark mode';
+  };
+  const savedDark = localStorage.getItem('theme') === 'dark';
+  applyTheme(savedDark);
+
+  darkBtn.addEventListener('click', () => {
+    const isDark = document.body.dataset.theme === 'dark';
+    applyTheme(!isDark);
+    localStorage.setItem('theme', !isDark ? 'dark' : 'light');
+  });
+
   // Download Receipt
   document.getElementById('btn-download').addEventListener('click', () => {
     if (typeof html2canvas === 'undefined') {
