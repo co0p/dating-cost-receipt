@@ -101,6 +101,6 @@ calc.js    → (no imports)
 
 - No build pipeline. All files are served as-is from the repository root.
 - No framework runtime.
-- No external runtime dependencies (CDN fonts, remote images, analytics scripts).
+- One permitted external runtime dependency: `html2canvas` loaded from CDN on page load. All other features must remain dependency-free. See [ADR-20260911-html2canvas-cdn](adr/ADR-20260911-html2canvas-cdn.md).
 - `calc.js` must remain DOM-free. Any function that touches `document` belongs in `app.js`.
 - `app.js` must remain calculation-free. Any arithmetic belongs in `calc.js`.

@@ -17,17 +17,19 @@ Product direction and sequencing for Date-A-Base. Each entry states the user out
 
 ---
 
+### Download Receipt Button
+
+- **Job story:** When I want to share my receipt, I want to download it as an image, so I don't have to manually crop a screenshot.
+- **Evidence:** 39 unit tests passing (`npx vitest run`), deployed at https://co0p.github.io/dating-cost-receipt/
+- **Delivered:** 2026-09-11
+
+---
+
 ## Partial
 
 ---
 
 ## Planned
-
-### Download Receipt Button
-
-- **Job story:** When I want to share my receipt, I want to download it as an image, so I don't have to manually crop a screenshot.
-- **Why next:** Requires `html2canvas` library integration. Core receipt must exist first (it does).
-- **Open question:** Whether to load `html2canvas` from a CDN or bundle it. Resolve at implementation time.
 
 ### Dark Mode
 

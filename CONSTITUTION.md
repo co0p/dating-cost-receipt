@@ -8,11 +8,12 @@
 
 ## Engineering Principles
 
-- No backend, no build step required. The project is static assets only: `index.html`, `style.css`, `app.js`, and images.
-- All logic is client-side. No external API calls, no data persistence, no cookies, no local storage.
+- No backend, no build step required. The project is static assets only: `index.html`, `style.css`, `app.js`, `calc.js`, and images.
+- All logic is client-side. No data persistence, no cookies, no local storage.
+- One scoped external runtime dependency is permitted: `html2canvas` loaded from CDN for the Download Receipt feature. All other features must remain dependency-free. See [ADR-20260911-html2canvas-cdn](docs/adr/ADR-20260911-html2canvas-cdn.md).
 - Satirical tone is a product constraint. Calculation rules must optimize for comedic effect, not financial accuracy.
 - Keep dependencies minimal. Prefer zero-dependency vanilla JS. If a framework is introduced it must compile to static output with no runtime server requirement.
-- Calculation logic must be pure functions (input → output, no side effects). This keeps them testable and auditable.
+- Calculation logic must be pure functions in `calc.js` (input → output, no side effects). This keeps them testable and auditable.
 - The DOM is the state. No state management library. The form drives the receipt in real time via direct DOM manipulation.
 
 ---
@@ -20,11 +21,12 @@
 ## Architecture Boundaries
 
 - `index.html` — entry point and markup only. No inline scripts or styles beyond the minimum for initial render.
-- `app.js` — all calculation logic and all DOM event handling. Pure calculation functions must be exported and independently testable.
+- `calc.js` — all pure calculation functions. No DOM access. Safe to import in Node.js for testing.
+- `app.js` — DOM event wiring only. Reads form inputs, calls `calc.js` functions, writes to receipt DOM nodes. No calculation logic.
 - `style.css` — all styling, including the receipt theme (monospaced font, paper texture, jagged edges).
 - Images and assets — static files only, no generated or fetched assets.
-- Dependency direction: `index.html` → `app.js` and `style.css`. No file imports the other in reverse.
-- No build pipeline for V1. If a build step is introduced, it must produce a self-contained `dist/` of static files.
+- Dependency direction: `index.html` → `app.js` → `calc.js`, and `index.html` → `style.css`. No reverse imports.
+- No build pipeline. If a build step is introduced, it must produce a self-contained `dist/` of static files.
 
 See [docs/architecture.md](docs/architecture.md) for the C4 Level 2 container view.
 
@@ -32,8 +34,8 @@ See [docs/architecture.md](docs/architecture.md) for the C4 Level 2 container vi
 
 ## Testing Strategy
 
-- Unit tests cover all pure calculation functions in `app.js`: base cost, vehicle multiplier, weather tax, enjoyment discount, and total derivation.
-- No integration or E2E tests required for V1. There is no server, no auth, and no routing.
+- Unit tests cover all pure calculation functions in `calc.js`: base cost, vehicle multiplier, weather tax, outfit surcharge, ex penalty, silence tax, food modifier, laugh discount, enjoyment discount, total derivation, and filename sanitization.
+- No integration or E2E tests required. There is no server, no auth, and no routing.
 - Manual browser testing on a 375px viewport (iPhone SE baseline) before any release.
 - Tests must pass before merging to `main`.
 
@@ -45,8 +47,8 @@ See [docs/testing.md](docs/testing.md) for commands, conventions, and evidence r
 
 - Initial page load under 2 seconds on a standard 4G connection (~10 Mbps).
 - CSS animations must run at 60fps. No janky transitions on the receipt update.
-- No network requests after initial load. All assets must be bundled in the repository.
-- Total asset weight target: under 200KB uncompressed.
+- One external network request is permitted on page load: `html2canvas` from CDN (~300KB). All other assets must be served from the repository.
+- Total asset weight target (excluding html2canvas): under 200KB uncompressed.
 
 ---
 
@@ -62,6 +64,7 @@ See [docs/testing.md](docs/testing.md) for commands, conventions, and evidence r
 **Active ADRs:**
 - [ADR-20260911-vanilla-js](docs/adr/ADR-20260911-vanilla-js.md) — No framework; vanilla JS for zero-dependency static output.
 - [ADR-20260911-receipt-as-dom](docs/adr/ADR-20260911-receipt-as-dom.md) — Receipt rendered as styled HTML DOM, not canvas or image.
+- [ADR-20260911-html2canvas-cdn](docs/adr/ADR-20260911-html2canvas-cdn.md) — html2canvas loaded from CDN; first and only permitted external runtime dependency.
 
 ---
 

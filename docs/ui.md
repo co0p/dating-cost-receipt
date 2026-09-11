@@ -94,4 +94,18 @@ Full WCAG AA compliance is a post-V1 goal.
 
 **Decision:** The receipt component must be visually self-contained within a ~375px wide, ~600px tall area. This ensures it fits in a single screenshot without scrolling on most phones.
 
-**Decision:** No "Download Receipt" button in V1. Users share via screenshot. The `html2canvas` download feature is explicitly a post-V1 enhancement (see `prd.md` §7).
+**Decision:** A "Download Receipt" button renders the receipt panel as a 2× PNG via `html2canvas` and triggers a browser download. The button is placed outside the receipt panel so it does not appear in the captured image.
+
+**Decision:** Filename pattern: `<yyyy-mm-dd>-<name1>-<name2>.png`, with both names lowercased and sanitized (spaces → hyphens, non-alphanumeric stripped). Falls back to `receipt.png` when date or names are empty.
+
+**Known limitation:** iOS Safari does not honour the `download` attribute on anchor tags for data URIs — it opens the image in a new tab instead of saving it. This is a browser restriction, not a fixable bug. Users on iOS can long-press the image to save it manually.
+
+---
+
+## Action Buttons
+
+**Decision:** Two action buttons live below the receipt panel: "Download Receipt" (primary, red) and "New Date" (secondary, grey).
+
+**Decision:** "New Date" resets all form inputs to their defaults and re-runs `updateReceipt`, returning the receipt to its initial state. It does not prompt for confirmation.
+
+**Rationale:** The reset button removes friction for users who want to calculate a second date without manually clearing every field. No confirmation needed — the form has no persistent state to protect.
