@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   vehicleCost, weatherTax, enjoymentDiscount, calculateTotal,
   outfitSurcharge, exPenalty, silenceTax, foodModifier, laughDiscount,
+  sanitizeFilename,
   BASE_COST
 } from './calc.js';
 
@@ -151,5 +152,39 @@ describe('calculateTotal', () => {
     // logistical=50, discount=enjoyment(5/10)*(10+50)=30, ld=0
     // total = 10 + 50 - 30 = 30
     expect(calculateTotal(0, 'walking', 'sunny', 5, 1, true, 0, 'decent-pasta', 0)).toBeCloseTo(30);
+  });
+});
+
+describe('sanitizeFilename', () => {
+  it('produces yyyy-mm-dd-name1-name2.png for clean inputs', () => {
+    expect(sanitizeFilename('2026-09-11', 'Alex', 'Jordan')).toBe('2026-09-11-alex-jordan.png');
+  });
+
+  it('replaces spaces with hyphens', () => {
+    expect(sanitizeFilename('2026-09-11', 'Mary Jane', 'Bob Ross')).toBe('2026-09-11-mary-jane-bob-ross.png');
+  });
+
+  it('strips non-alphanumeric characters (except hyphens)', () => {
+    expect(sanitizeFilename('2026-09-11', 'A$lex!', '@Jordan#')).toBe('2026-09-11-alex-jordan.png');
+  });
+
+  it('lowercases all characters', () => {
+    expect(sanitizeFilename('2026-09-11', 'ALEX', 'JORDAN')).toBe('2026-09-11-alex-jordan.png');
+  });
+
+  it('returns receipt.png when date is empty', () => {
+    expect(sanitizeFilename('', 'Alex', 'Jordan')).toBe('receipt.png');
+  });
+
+  it('returns receipt.png when name1 is empty', () => {
+    expect(sanitizeFilename('2026-09-11', '', 'Jordan')).toBe('receipt.png');
+  });
+
+  it('returns receipt.png when name2 is empty', () => {
+    expect(sanitizeFilename('2026-09-11', 'Alex', '')).toBe('receipt.png');
+  });
+
+  it('returns receipt.png when names reduce to empty after sanitization', () => {
+    expect(sanitizeFilename('2026-09-11', '!!!', '###')).toBe('receipt.png');
   });
 });

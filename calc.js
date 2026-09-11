@@ -111,16 +111,32 @@ export function laughDiscount(laughs) {
 }
 
 /**
+ * Produces a safe PNG filename from date and two names.
+ * Pattern: <yyyy-mm-dd>-<name1>-<name2>.png
+ * Falls back to receipt.png if date or either name is empty.
+ * @param {string} date - ISO date string e.g. "2026-09-11"
+ * @param {string} name1 - payer name
+ * @param {string} name2 - datee name
+ * @returns {string}
+ */
+export function sanitizeFilename(date, name1, name2) {
+  const sanitize = str => str
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-]/g, '')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+
+  const d = (date || '').trim();
+  const n1 = sanitize(name1 || '');
+  const n2 = sanitize(name2 || '');
+
+  if (!d || !n1 || !n2) return 'receipt.png';
+  return `${d}-${n1}-${n2}.png`;
+}
+
+/**
  * Final total. Floored at 0.
- * @param {number} distance
- * @param {string} vehicle
- * @param {string} weather
- * @param {number} enjoyment - 1–10
- * @param {number} outfitLevel - 1–5
- * @param {boolean} exMentioned
- * @param {number} silences - 0–10
- * @param {string} food
- * @param {number} laughs
  * @returns {number}
  */
 export function calculateTotal(

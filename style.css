@@ -263,6 +263,52 @@ input[type="range"] {
 }
 
 /* ============================================================
+   ACTION BUTTONS
+   ============================================================ */
+.action-buttons {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  flex: 1;
+  min-height: 44px;
+  padding: 0.75rem 1rem;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.1s;
+  letter-spacing: 0.01em;
+}
+
+.btn:active {
+  opacity: 0.8;
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background: #c0392b;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #a93226;
+}
+
+.btn-secondary {
+  background: #eee;
+  color: #333;
+}
+
+.btn-secondary:hover {
+  background: #ddd;
+}
+
+/* ============================================================
    WIDE VIEWPORT ENHANCEMENT
    Only applies above 520px — form and receipt side by side
    ============================================================ */
@@ -276,5 +322,12 @@ input[type="range"] {
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
     align-items: start;
+  }
+
+  .action-buttons {
+    grid-column: 1 / -1;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
   }
 }

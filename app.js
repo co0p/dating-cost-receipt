@@ -4,6 +4,7 @@
 import {
   vehicleCost, weatherTax, enjoymentDiscount, calculateTotal,
   outfitSurcharge, exPenalty, silenceTax, foodModifier, laughDiscount,
+  sanitizeFilename,
   BASE_COST
 } from './calc.js';
 
@@ -180,4 +181,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initial render
   updateReceipt();
+
+  // Download Receipt
+  document.getElementById('btn-download').addEventListener('click', () => {
+    if (typeof html2canvas === 'undefined') {
+      alert('Download unavailable — image library failed to load. Please check your connection and try again.');
+      return;
+    }
+    const receipt = document.getElementById('receipt');
+    const date    = document.getElementById('date').value;
+    const name1   = document.getElementById('payer-name').value;
+    const name2   = document.getElementById('datee-name').value;
+    const filename = sanitizeFilename(date, name1, name2);
+
+    html2canvas(receipt, { scale: 2, useCORS: true }).then(canvas => {
+      const link = document.createElement('a');
+      link.download = filename;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+  });
+
+  // New Date — reset all inputs to defaults
+  document.getElementById('btn-reset').addEventListener('click', () => {
+    document.getElementById('date').value         = new Date().toISOString().split('T')[0];
+    document.getElementById('payer-name').value   = '';
+    document.getElementById('datee-name').value   = '';
+    document.getElementById('distance').value     = '0';
+    document.getElementById('vehicle').value      = 'walking';
+    document.getElementById('weather').value      = 'sunny';
+    document.getElementById('outfit').value       = '1';
+    document.getElementById('enjoyment').value    = '5';
+    document.getElementById('laughs').value       = '0';
+    document.getElementById('ex-mentioned').value = 'no';
+    document.getElementById('silences').value     = '0';
+    document.getElementById('food').value         = 'decent-pasta';
+    updateReceipt();
+  });
 });
